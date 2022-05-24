@@ -6,4 +6,4 @@
 - 이미지 patch를 NLP에서의 단어와 같이 다룸
 - 거대한 dataset인 JFT-300M으로 사전 훈련을 시킴  
 - image classification 분야의 SOTA인 ResNet model보다 뛰어난 성능을 약 1/15의 계산 비용만으로 얻을 수 있음  
-- 사전 학습 dataset과 model을 더욱 크게 확장시켜 더 좋은 성능을 기대할 
+- 사전 학습 dataset과 model을 더욱 크게 확장시켜 더 좋은 성능을 기대할 수 있음
