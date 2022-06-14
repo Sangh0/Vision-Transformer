@@ -140,8 +140,13 @@ def train_step(model,
     end_training = time.time()
     print(f'\nTotal time for training is {end_training-start_training:.3f}s')
     
-    return model, loss_list, acc_list, val_loss_list, val_acc_list
-
+    return {
+        'model': model, 
+        'loss': loss_list, 
+        'miou': miou_list, 
+        'val_loss': val_loss_list, 
+        'val_miou': val_miou_list
+        }
 
 if __name__ == '__main__':
     batch_size = 32
@@ -179,7 +184,7 @@ if __name__ == '__main__':
     
     summary(VisionTransformer(**model_config), (3, 224, 224), device='cpu')
 
-    model, train_loss, train_acc, valid_loss, valid_acc = train_step(
+    history = train_step(
         model,
         train_data=train_loader,
         validation_data=valid_loader,
