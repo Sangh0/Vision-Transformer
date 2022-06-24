@@ -143,9 +143,9 @@ def train_step(model,
     return {
         'model': model, 
         'loss': loss_list, 
-        'miou': miou_list, 
+        'acc': acc_list, 
         'val_loss': val_loss_list, 
-        'val_miou': val_miou_list
+        'val_acc': val_acc_list
         }
 
 if __name__ == '__main__':
