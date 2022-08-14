@@ -1,6 +1,6 @@
 # Implement and Review paper related to Vision Transformer
 
-<img src = "https://github.com/Sangh0/Vision-Transformer/blob/main/Transformer.JPG?raw=true">
+<img src = "https://github.com/Sangh0/Vision-Transformer/blob/main/ViT/figure/Transformer.JPG?raw=true" width=500>
 
 ## What is Vision Transformer?  
 
