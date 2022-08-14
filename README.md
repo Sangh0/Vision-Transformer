@@ -1,4 +1,7 @@
 # Implement and Review paper related to Vision Transformer
+
+<img src = "https://github.com/Sangh0/Vision-Transformer/blob/main/Transformer.JPG?raw=true">
+
 ## What is Vision Transformer?  
 
 - Vision Transformer is a model for image classification inspired by Transformer in NLP  
