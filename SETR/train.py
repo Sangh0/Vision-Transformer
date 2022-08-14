@@ -5,10 +5,10 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from torchcallback import EarlyStopping, CheckPoint
-from torchmetrics import Metrics
-from torchlosses import OhemCELoss
-from torchscheduler import PolynomialLRDecay
+from util.torchcallback import EarlyStopping, CheckPoint
+from util.torchmetrics import Metrics
+from util.torchlosses import OhemCELoss
+from util.torchscheduler import PolynomialLRDecay
 from model import SETR
 
 lr = 0.01
