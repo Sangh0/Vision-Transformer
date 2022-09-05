@@ -8,7 +8,8 @@
 ```
 usage: main.py [-h] [--data_dir DATA_DIR] [--lr LR] [--epochs EPOCHS] [--batch_size BATCH_SIZE] \
                [--weight_decay WEIGHT_DECAY] [--num_classes NUM_CLASSES] [--img_size IMG_SIZE] \
-               [--lr_scheduling LR_SCHEDULING] [--check_point CHECK_POINT] [--early_stop EARLY_STOP] \ [--train_log_step TRAIN_LOG_STEP] [--valid_log_step VALID_LOG_STEP]
+               [--lr_scheduling LR_SCHEDULING] [--check_point CHECK_POINT] [--early_stop EARLY_STOP] \
+               [--train_log_step TRAIN_LOG_STEP] [--valid_log_step VALID_LOG_STEP]
 
 example: python main.py --data_dir ./dataset --lr --num_classes 2 --img_size 224
 ```
