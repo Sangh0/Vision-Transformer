@@ -92,7 +92,7 @@ class TrainModel(object):
             self.writer.add_scalar('lr', self.optimizer.param_groups[0]["lr"], epoch)
 
             print(f'\n{"="*45} Epoch {epoch+1}/{self.epochs} {"="*45}'
-                  f'time: {end_time-init_time:2f}s'
+                  f'\ntime: {end_time-init_time:2f}s'
                   f'   lr = {self.optimizer.param_groups[0]["lr"]}')
             print(f'\ntrain average loss: {train_loss:.3f}'
                   f'   accuracy: {train_acc:.3f}')
