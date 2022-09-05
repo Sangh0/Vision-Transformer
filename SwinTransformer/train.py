@@ -1,3 +1,4 @@
+import os
 import time
 from tqdm.auto import tqdm
 
@@ -104,6 +105,7 @@ class TrainModel(object):
                 self.lr_scheduler.step()
 
             if self.check_point:
+                os.makedirs('./weights')
                 path = f'./weights/check_point_{epoch+1}.pt'
                 self.cp(valid_loss, self.model, path)
 
