@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import torch.utils.checkpoint as checkpoint
 from timm.models.layers import DropPath, trunc_normal_
 
 
@@ -365,7 +364,6 @@ class BasicLayer(nn.Module):
         drop_path: rate of drop path block
         norm_layer: normalization layer. Default: nn.LayerNorm
         downsample: apply patch merging block
-        use_checkpoint: whether to use checkpointing to save memory
     """
     def __init__(
         self,
@@ -382,13 +380,11 @@ class BasicLayer(nn.Module):
         drop_path=0.,
         norm_layer=nn.LayerNorm,
         downsample=None,
-        use_checkpoint=False,
     ):
         super(BasicLayer, self).__init__()
         self.dim = dim
         self.input_resolution = input_resolution
         self.depth = depth
-        self.use_checkpoint = use_checkpoint
         
         self.blocks = nn.ModuleList([
             SwinTransformerBlock(
@@ -415,10 +411,7 @@ class BasicLayer(nn.Module):
             
     def forward(self, x):
         for block in self.blocks:
-            if self.use_checkpoint:
-                x = checkpoint.checkpoint(block, x)
-            else:
-                x = block(x)
+            x = block(x)
                 
         if self.downsample is not None:
             x = self.downsample(x)
@@ -445,7 +438,7 @@ class SwinTransformer(nn.Module):
         drop_path_rate: rate of drop path block
         norm_layer: normalization layer. Default: nn.LayerNorm
         ape: absolute position embedding. we use relative position bias
-        patch_norm: 
+        patch_norm: apply normalization layer in patch embedding layer
     """
     def __init__(
         self,
@@ -466,7 +459,6 @@ class SwinTransformer(nn.Module):
         norm_layer=nn.LayerNorm,
         ape=False,
         patch_norm=True,
-        use_checkpoint=False,
     ):
         super(SwinTransformer, self).__init__()
         self.num_classes = num_classes
@@ -513,7 +505,6 @@ class SwinTransformer(nn.Module):
                 drop_path=dpr[sum(depths[:i_layer]):sum(depths[:i_layer + 1])],
                 norm_layer=norm_layer,
                 downsample=PatchMerging if (i_layer < self.num_layers - 1) else None,
-                use_checkpoint=use_checkpoint,
             )
             self.layers.append(layer)
             
