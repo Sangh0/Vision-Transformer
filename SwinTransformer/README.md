@@ -16,6 +16,13 @@ usage: main.py [-h] [--data_dir DATA_DIR] [--lr LR] [--epochs EPOCHS] [--batch_s
 example: python main.py --data_dir ./dataset --lr 1e-3 --num_classes 2 --img_size 224
 ```
 
+## Evaluate
+```
+usage: evaluate.py [-h] [--data_dir DATA_DIR] [--weight WEIGHT] [--num_classes NUM_CLASS] [--img_size IMG_SIZE]
+
+example: python evaluate.py --data_dir ./dataset --weight ./weights/best_weight.pt --num_classes 2
+```
+
 ## Run on Jupyter Notebook for training model
 ```python
 # Load Packages
@@ -106,4 +113,61 @@ model = TrainModel(
 )
 
 history = model.fit(train_loader, valid_loader)
+```
+
+## Run on Jupyter Notebook to evaluate model for test set
+```python
+import torch
+import torchvision.transforms as transforms
+from torch.utils.data import DataLoader
+
+from model import SwinTransformer
+from util.dataset import CustomDataset
+from evaluate import eval
+
+Config = {
+    'data_dir': './dataset',
+    'weight': './weights/best_weight.pt',
+    'num_classes': 2,
+    'img_size': 224,
+}
+
+transforms_ = transforms.Compose([
+    transforms.Resize((Config['img_size'], Config['img_size'])),
+    transforms.ToTensor(),
+    transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+])
+
+test_loader = DataLoader(
+    CustomDataset(path=Config['data_dir'], subset='test', transforms_=transforms_),
+    batch_size=1,
+    shuffle=False,
+    drop_last=False,
+)
+
+model_config = {
+    'img_size': Config['img_size'],
+    'patch_size': 4,
+    'in_dim': 3,
+    'num_classes': Config['num_classes'],
+    'embed_dim': 96,
+    'depths': [2, 2, 6, 2],
+    'num_heads': [3, 6, 12, 24],
+    'window_size': 7,
+    'mlp_ratio': 4.,
+    'qkv_bias': True,
+    'qk_scale': None,
+    'drop_rate': 0.1,
+    'attn_drop_rate': 0.1,
+    'drop_path_rate': 0.1,
+    'norm_layer': nn.LayerNorm,
+    'ape': False,
+    'patch_norm': True,
+    'use_checkpoint': False,
+}
+
+model = SwinTransformer(**model_config)
+model.load_state_dict(torch.load(Config['weight']))
+
+result = eval(model, test_loader)
 ```
