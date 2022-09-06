@@ -21,7 +21,6 @@ class TrainModel(object):
         check_point: save weight of model when model achieved best score
         early_stop: stop training when overfitting occurs
     """
-
     def __init__(
         self,
         model,
@@ -59,7 +58,8 @@ class TrainModel(object):
             max_lr=lr,
             min_lr=lr*1e-2,
             warmup_steps=20,
-            gamma=1.0,
+            gamma=0.5,
+            last_epoch=-1,
         )
 
         self.check_point = check_point
