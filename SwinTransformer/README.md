@@ -91,7 +91,6 @@ model_config = {
     'norm_layer': nn.LayerNorm,
     'ape': False,
     'patch_norm': True,
-    'use_checkpoint': False,
 }
 
 model = SwinTransformer(**model_config)
@@ -163,7 +162,6 @@ model_config = {
     'norm_layer': nn.LayerNorm,
     'ape': False,
     'patch_norm': True,
-    'use_checkpoint': False,
 }
 
 model = SwinTransformer(**model_config)
