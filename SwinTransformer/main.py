@@ -82,7 +82,6 @@ def main(args):
         'norm_layer': nn.LayerNorm,
         'ape': False,
         'patch_norm': True,
-        'use_checkpoint': False,
     }
 
     model = SwinTransformer(**model_config)
