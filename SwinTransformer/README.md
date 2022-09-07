@@ -148,6 +148,7 @@ test_loader = DataLoader(
 )
 
 model_config = {
+    'use_pretrained': False,
     'img_size': Config['img_size'],
     'patch_size': 4,
     'in_dim': 3,
