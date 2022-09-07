@@ -29,12 +29,12 @@ example: python evaluate.py --data_dir ./dataset --weight ./weights/best_weight.
 import torchvision.transforms as transforms
 from torchsummary import summary
 
-from model import SwinTransformer
 from train import TrainModel
 from util.dataset import CustomDataset
 
 # Set hyperparameters
 Config = {
+    'use_pretrained': False,
     'data_dir': './dataset',
     'lr': 1e-3,
     'weight_decay': 5e-2,
@@ -50,57 +50,60 @@ Config = {
 }
 
 # Load Datasets
-path = Config['data_dir']
-
 transforms_ = transforms.Compose([
-    transforms.Resize((img_size, img_size)),
+    transforms.Resize((Config['img_size'], Config['img_size'])),
     transforms.ToTensor(),
     transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
 ])
 
 train_loader = DataLoader(
-    CustomDataset(path=path, subset='train', transforms_=transforms_),
+    CustomDataset(path=Config['data_dir'], subset='train', transforms_=transforms_),
     batch_size=Config['batch_size'],
     shuffle=True,
     drop_last=True,
 )
 
 valid_loader = DataLoader(
-    CustomDataset(path=path, subset='valid', transforms_=transforms_),
+    CustomDataset(path=Config['data_dir'], subset='valid', transforms_=transforms_),
     batch_size=Config['batch_size'],
     shuffle=True,
     drop_last=True,
 )
 
 # Load Swin Transformer
-model_config = {
-    'img_size': img_size,
-    'patch_size': 4,
-    'in_dim': 3,
-    'num_classes': args.num_classes,
-    'embed_dim': 96,
-    'depths': [2, 2, 6, 2],
-    'num_heads': [3, 6, 12, 24],
-    'window_size': 7,
-    'mlp_ratio': 4.,
-    'qkv_bias': True,
-    'qk_scale': None,
-    'drop_rate': 0.1,
-    'attn_drop_rate': 0.1,
-    'drop_path_rate': 0.1,
-    'norm_layer': nn.LayerNorm,
-    'ape': False,
-    'patch_norm': True,
-}
+if Config['use_pretrained']:
+    from pretrained_model import get_pretrained_model
+    swin_transformer = get_pretrained_model(num_classes=Config['num_classes'], pretrained=True)
 
-model = SwinTransformer(**model_config)
+else:
+    from model import SwinTransformer
+    model_config = {
+        'img_size': Config['img_size'],
+        'patch_size': 4,
+        'in_dim': 3,
+        'num_classes': Config['num_classes'],
+        'embed_dim': 96,
+        'depths': [2, 2, 6, 2],
+        'num_heads': [3, 6, 12, 24],
+        'window_size': 7,
+        'mlp_ratio': 4.,
+        'qkv_bias': True,
+        'qk_scale': None,
+        'drop_rate': 0.1,
+        'attn_drop_rate': 0.1,
+        'drop_path_rate': 0.1,
+        'norm_layer': nn.LayerNorm,
+        'ape': False,
+        'patch_norm': True,
+    }
+    swin_transformer = SwinTransformer(**model_config)
 
 # Check summary of model
-summary(model, (3, Config['img_size'], Config['img_size']), device='cpu')
+summary(swin_transformer, (3, Config['img_size'], Config['img_size']), device='cpu')
 
 # Training model
 model = TrainModel(
-    model=model,
+    model=swin_transformer,
     lr=Config['lr'],
     epochs=Config['epochs'],
     weight_decay=Config['weight_decay'],
