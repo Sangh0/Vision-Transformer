@@ -11,7 +11,7 @@ from train import TrainModel
 from util.dataset import CustomDataset
 
 def get_args_parser():
-    parser = argparse.ArgumentParser(description='Training PIDNet', add_help=False)
+    parser = argparse.ArgumentParser(description='Training Swin Transformer', add_help=False)
     parser.add_argument('--use_pretrained', type=bool, default=False,
                         help='use pre-trained weight of swin transformer in timm package')
     parser.add_argument('--data_dir', type=str, required=True,
@@ -69,7 +69,7 @@ def main(args):
     if args.use_pretrained:
 
         from pretrained_model import get_pretrained_model
-        model = get_pretrained_model()
+        model = get_pretrained_model(num_classes=args.num_classes)
 
     else:
 
