@@ -8,9 +8,9 @@ import torch.optim as optim
 import torchvision.models as models
 from torch.utils.tensorboard import SummaryWriter
 
-from loss import DistillationLoss
-from scheduler import CosineAnnealingWarmupRestarts
-from callback import CheckPoint, EarlyStopping
+from util.loss import DistillationLoss
+from util.scheduler import CosineAnnealingWarmupRestarts
+from util.callback import CheckPoint, EarlyStopping
 
 
 class TrainModel(object):
