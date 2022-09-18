@@ -2,7 +2,7 @@
 
 ### Implementation or Review Paper List
 - [x] [ViT (ICLR 2021)](https://github.com/Sangh0/Vision-Transformer/tree/main/ViT) (classification or backbone network)
-- [ ] [DeiT (2021)](https://github.com/Sangh0/Vision-Transformer/tree/main/DeiT) (classification or backbone network)
+- [x] [DeiT (2021)](https://github.com/Sangh0/Vision-Transformer/tree/main/DeiT) (classification or backbone network)
 - [x] [Swin Transformer (2021)](https://github.com/Sangh0/Vision-Transformer/tree/main/SwinTransformer) (classification or backbone network)
 - [ ] [Segmenter (ICCV 2021)](https://github.com/Sangh0/Vision-Transformer/tree/main/Segmenter) (semantic segmentation)
 - [x] [SETR (CVPR 2021)](https://github.com/Sangh0/Vision-Transformer/tree/main/SETR) (semantic segmentation)
