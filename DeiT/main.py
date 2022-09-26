@@ -1,5 +1,4 @@
 import argparse
-from webbrowser import get
 
 import torch
 import torch.nn as nn
